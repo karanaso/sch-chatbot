@@ -17,3 +17,20 @@ This method allows for quick setup without needing to modify any configuration f
 ## Using with Veyon Master
 
 Use [Veyon Master](https://veyon.io/en/) to deploy the URL simultaneously across all client computers to set the API key. Alternatively, you can configure each client computer individually.
+
+
+## Docker Installation and Setup
+
+To run the chatbot using Docker, follow these steps:
+
+1. Pull the Docker image:
+```
+docker pull karanaso/sch-chatbot:latest
+```
+
+2. Run the container:
+```
+docker run -d -p 8080:80 karanaso/sch-chatbot:latest
+```
+
+The chatbot will now be accessible at `http://localhost:3000`. You can then proceed to set up your API key as described above.
