@@ -43,13 +43,9 @@ export const DialogWarningNoAPIKey = () => {
           </DialogDescription>
         </DialogHeader>
         <div className="grid grid-cols-4 items-center gap-4 mt-2">
-          <Label htmlFor="name" className="text-right">
-            Name
-          </Label>
           <Input
-            id="name"
-            defaultValue="Pedro Duarte"
-            className="col-span-3"
+            className="col-span-12"
+            defaultValue="Open AI Key goes here"
             onChange={e => setKey(e.target.value)}
           />
         </div>
