@@ -9,7 +9,7 @@ export enum AIActions {
   IMAGE = "image"
 }
 
-const OPENAI_API_KEY = localStorage.getItem('openAIKey')
+const getOpenAIKey = () => localStorage.getItem('openAIKey')
 
 export async function callAI(aiActions: AIActions, messages: Message[]): Promise<string> {
   switch (aiActions) {
@@ -29,7 +29,7 @@ async function getChatCompletion(messages: Message[]): Promise<string> {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENAI_API_KEY}`
+        'Authorization': `Bearer ${getOpenAIKey()}`
       },
       body: JSON.stringify({
         model: "gpt-4o-mini",
@@ -42,7 +42,7 @@ async function getChatCompletion(messages: Message[]): Promise<string> {
     
     if (response.status === 401) {
       delete localStorage.openAIKey;
-      document.location.reload();
+      document.location.href='/';
     }
     if (!response.ok) {
       throw new Error('Failed to get response from OpenAI');
@@ -63,7 +63,7 @@ async function getImageFromMessage(messages: Message[]): Promise<string> {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${OPENAI_API_KEY}`
+        'Authorization': `Bearer ${getOpenAIKey()}`
       },
       body: JSON.stringify({
         model: "dall-e-3",
