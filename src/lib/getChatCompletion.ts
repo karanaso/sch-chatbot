@@ -9,7 +9,9 @@ export enum AIActions {
   IMAGE = "image"
 }
 
-const getOpenAIKey = () => localStorage.getItem('openAIKey')
+const OPENAI_KEY='openAIKey';
+const getOpenAIKey = () => localStorage.getItem(OPENAI_KEY) || '';
+export const setOpenAIKey = (key:string) => localStorage.setItem(OPENAI_KEY, key);
 
 export async function callAI(aiActions: AIActions, messages: Message[]): Promise<string> {
   switch (aiActions) {
