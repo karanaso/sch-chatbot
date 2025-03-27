@@ -4,6 +4,7 @@ import { AppBar } from "./container/AppBar";
 import { Routes, Route, BrowserRouter, Outlet, useNavigate } from 'react-router-dom';
 import { Chat, ChatType } from "./container/Chat";
 import { DialogWarningNoAPIKey } from "./components/DialogWarningNoAPIKey";
+import { SetAPIKey } from "./container/SetAPIKey";
 
 function Layout() {
   return (
@@ -25,6 +26,7 @@ export function App() {
           <Route path="/image" element={<Chat type={ChatType.Image} />} />
           <Route path="/explain" element={<Chat type={ChatType.Explain} />} />
           <Route path="/pin" element={<PinComponent />} />
+          <Route path='/set-api-key' element={<SetAPIKey />} />
         </Route>
       </Routes>
     </BrowserRouter>
