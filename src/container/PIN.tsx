@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 const PinComponent = () => {
   const [pin, setPin] = useState('');
   const [submitted, setSubmitted] = useState(false);
 
-  const handlePinChange = (event) => {
+  const handlePinChange = (event:any) => {
     setPin(event.target.value);
     if (!localStorage.getItem("pin")) {
       localStorage.setItem("pin", event.target.value);
     }
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event:any) => {
     event.preventDefault();
     setSubmitted(true);
   };
@@ -28,7 +28,6 @@ const PinComponent = () => {
             onChange={handlePinChange}
             className="w-full px-4 py-2 mb-4 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Enter PIN"
-            maxLength="6"
             required
           />
           <button

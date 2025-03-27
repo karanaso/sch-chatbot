@@ -1,7 +1,7 @@
 import "./index.css";
 import PinComponent from "./container/PIN";
 import { AppBar } from "./container/AppBar";
-import { Routes, Route, BrowserRouter, Outlet, useNavigate } from 'react-router-dom';
+import { Routes, Route, BrowserRouter, Outlet } from 'react-router-dom';
 import { Chat, ChatType } from "./container/Chat";
 import { DialogWarningNoAPIKey } from "./components/DialogWarningNoAPIKey";
 import { SetAPIKey } from "./container/SetAPIKey";

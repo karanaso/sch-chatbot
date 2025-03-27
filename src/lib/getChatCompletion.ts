@@ -1,5 +1,5 @@
-interface Message {
-  role: "user" | "agent"
+export interface Message {
+  role: "user" | "agent" | "system"
   b64_json?: string
   content: string
 }

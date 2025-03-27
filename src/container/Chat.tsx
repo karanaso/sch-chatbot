@@ -2,9 +2,9 @@ import { useEffect, useState } from "react"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Cog } from "lucide-react"
-import { callAI, AIActions } from "../lib/getChatCompletion"
+import { callAI, AIActions, Message } from "@/lib/getChatCompletion"
 
 import { scrollToBottom } from "../lib/scroll"
 

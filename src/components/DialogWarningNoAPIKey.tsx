@@ -6,9 +6,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "./ui/dialog"
-import { Label } from '@/components/ui/label'
+
 import { Input } from '@/components/ui/input'
 import { Button } from "./ui/button"
 export const DialogWarningNoAPIKey = () => {
