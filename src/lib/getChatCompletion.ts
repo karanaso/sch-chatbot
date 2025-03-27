@@ -46,6 +46,7 @@ async function getChatCompletion(messages: Message[]): Promise<string> {
       delete localStorage.openAIKey;
       document.location.href='/';
     }
+
     if (!response.ok) {
       throw new Error('Failed to get response from OpenAI');
     }
@@ -76,6 +77,11 @@ async function getImageFromMessage(messages: Message[]): Promise<string> {
       })
     });
 
+    if (response.status === 401) {
+      delete localStorage.openAIKey;
+      document.location.href='/';
+    }
+    
     if (!response.ok) {
       throw new Error('Failed to get response from OpenAI');
     }
