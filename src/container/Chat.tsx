@@ -24,8 +24,8 @@ export function Chat({ type }: Chat) {
 
   useEffect(() => {
     if (type === ChatType.Explain) {
-      if (localStorage.getItem(type)) {
-        return setMessages(JSON.parse(localStorage.getItem(type) || "[]"));
+      if (sessionStorage.getItem(type)) {
+        return setMessages(JSON.parse(sessionStorage.getItem(type) || "[]"));
       }
       setMessages([
         { role: "system", content: "You are a helpful tutor that guides students step by step. Never give the final answer immediately unless the student is correct. Instead, break it down into as many small logical steps possible and ask guiding questions. Wait for student responses before proceeding." },
@@ -43,8 +43,8 @@ export function Chat({ type }: Chat) {
         },
       ]);
     } else if (type === ChatType.Chat) {
-      if (localStorage.getItem(type)) {
-        return setMessages(JSON.parse(localStorage.getItem(type) || "[]"));
+      if (sessionStorage.getItem(type)) {
+        return setMessages(JSON.parse(sessionStorage.getItem(type) || "[]"));
       }
       setMessages([
         {
@@ -88,7 +88,7 @@ export function Chat({ type }: Chat) {
       }
     }
     if ((type !== ChatType.Image) && (messages.length > 1)) {
-      localStorage.setItem(type, JSON.stringify(messages));
+      sessionStorage.setItem(type, JSON.stringify(messages));
     }
 
     talkToAI();

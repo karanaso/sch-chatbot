@@ -4,14 +4,14 @@ import { useEffect } from "react";
 
 
 export const LanguageSelector = () => {
-  const getLangId = () => localStorage.getItem('langId') || 'en';
+  const getLangId = () => sessionStorage.getItem('langId') || 'en';
 
-  const setLangId = (langId: string) => localStorage.setItem('langId', langId);
+  const setLangId = (langId: string) => sessionStorage.setItem('langId', langId);
 
   useEffect(() => {
-    const langId = localStorage.getItem('langId');
+    const langId = sessionStorage.getItem('langId');
     if (!langId) {
-      localStorage.setItem('langId', 'en');
+      sessionStorage.setItem('langId', 'en');
     }
   }, []);
 
