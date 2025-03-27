@@ -9,7 +9,7 @@ To get started, users need to provide their own OpenAI API key to authenticate a
 You can set your OpenAI API key **ONCE** by appending it as a URL parameter when accessing the chatbot:
 
 ```
-https://your-chatbot-url.com/?apikey=your-openai-api-key
+https://your-chatbot-url.com/?set-api-key=your-openai-api-key
 ```
 
 This method allows for quick setup without needing to modify any configuration files. The API key will be securely stored in your browser's session for subsequent interactions with the chatbot.
