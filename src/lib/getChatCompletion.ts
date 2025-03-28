@@ -1,6 +1,6 @@
 export interface Message {
   role: "user" | "agent" | "system"
-  b64_json?: string
+  url?: string
   content: string
 }
 
@@ -71,7 +71,7 @@ async function getImageFromMessage(messages: Message[]): Promise<string> {
       body: JSON.stringify({
         model: "dall-e-3",
         prompt: messages[messages.length - 1].content,
-        response_format: 'b64_json',
+        response_format: 'url',        
         n: 1,
         size: "1024x1024",
       })
@@ -87,8 +87,7 @@ async function getImageFromMessage(messages: Message[]): Promise<string> {
     }
 
     const data = await response.json();
-    console.log('the data', data);
-    return data.data[0].b64_json;
+    return data.data[0].url;
   } catch (error) {
     console.error('Error in image generation:', error);
     return 'Sorry, I encountered an error processing your request.';
