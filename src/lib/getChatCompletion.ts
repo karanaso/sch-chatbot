@@ -1,3 +1,4 @@
+import { getOpenAIKey } from "./storage";
 import { ChatModels, ImageModels } from "./store";
 
 export interface Message {
@@ -10,10 +11,6 @@ export enum AIActions {
   CHAT = "chat",
   IMAGE = "image"
 }
-
-const OPENAI_KEY = 'openAIKey';
-const getOpenAIKey = () => localStorage.getItem(OPENAI_KEY) || '';
-export const setOpenAIKey = (key: string) => localStorage.setItem(OPENAI_KEY, key);
 
 export async function callAI(
   aiActions: AIActions,

@@ -1,20 +1,5 @@
+const OPENAI_KEY = 'openAIKey';
 
-export function storeJsonObject(id: string, data: any): void {
-  try {
-    const jsonString = JSON.stringify(data);
-    localStorage.setItem(id, jsonString);
-  } catch (error) {
-    console.error(`Error storing data for id ${id}:`, error);
-  }
-}
+export const getOpenAIKey = () => localStorage.getItem(OPENAI_KEY) || '';
 
-export function retrieveJsonObject<T>(id: string): T | null {
-  try {
-    const jsonString = localStorage.getItem(id);
-    if (!jsonString) return null;
-    return JSON.parse(jsonString) as T;
-  } catch (error) {
-    console.error(`Error retrieving data for id ${id}:`, error);
-    return null;
-  }
-}
+export const setOpenAIKey = (key: string) => localStorage.setItem(OPENAI_KEY, key);
