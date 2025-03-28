@@ -1,3 +1,5 @@
+import { ChatModels, ImageModels } from "./store";
+
 export interface Message {
   role: "user" | "agent" | "system"
   url?: string
@@ -9,23 +11,28 @@ export enum AIActions {
   IMAGE = "image"
 }
 
-const OPENAI_KEY='openAIKey';
+const OPENAI_KEY = 'openAIKey';
 const getOpenAIKey = () => localStorage.getItem(OPENAI_KEY) || '';
-export const setOpenAIKey = (key:string) => localStorage.setItem(OPENAI_KEY, key);
+export const setOpenAIKey = (key: string) => localStorage.setItem(OPENAI_KEY, key);
 
-export async function callAI(aiActions: AIActions, messages: Message[]): Promise<string> {
+export async function callAI(
+  aiActions: AIActions,
+  messages: Message[],
+  model: ChatModels | ImageModels,
+): Promise<string> {
   switch (aiActions) {
     case AIActions.CHAT:
-      return getChatCompletion(messages);
+      return getChatCompletion(messages, model as ChatModels);
     case AIActions.IMAGE:
-      return getImageFromMessage(messages);
+      return getImageFromMessage(messages, model as ImageModels);
     default:
       throw new Error('Invalid AI action');
   }
 }
 
-async function getChatCompletion(messages: Message[]): Promise<string> {
-
+async function getChatCompletion(messages: Message[], model: ChatModels): Promise<string> {
+  console.log('using model', model);
+  if (!model) return 'Please select a model first';
   try {
     const response = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
@@ -34,17 +41,17 @@ async function getChatCompletion(messages: Message[]): Promise<string> {
         'Authorization': `Bearer ${getOpenAIKey()}`
       },
       body: JSON.stringify({
-        model: "gpt-4o-mini",
+        model: model,
         messages: messages.map(msg => ({
           role: msg.role === 'agent' ? 'assistant' : 'user',
           content: msg.content
         })),
       })
     });
-    
+
     if (response.status === 401) {
       delete localStorage.openAIKey;
-      document.location.href='/';
+      document.location.href = '/';
     }
 
     if (!response.ok) {
@@ -60,7 +67,9 @@ async function getChatCompletion(messages: Message[]): Promise<string> {
 }
 
 
-async function getImageFromMessage(messages: Message[]): Promise<string> {
+async function getImageFromMessage(messages: Message[], model: ImageModels): Promise<string> {
+  console.log('using model', model);
+  if (!model) return 'a';
   try {
     const response = await fetch('https://api.openai.com/v1/images/generations', {
       method: 'POST',
@@ -69,9 +78,9 @@ async function getImageFromMessage(messages: Message[]): Promise<string> {
         'Authorization': `Bearer ${getOpenAIKey()}`
       },
       body: JSON.stringify({
-        model: "dall-e-3",
+        model: model,
         prompt: messages[messages.length - 1].content,
-        response_format: 'url',        
+        response_format: 'url',
         n: 1,
         size: "1024x1024",
       })
@@ -79,9 +88,9 @@ async function getImageFromMessage(messages: Message[]): Promise<string> {
 
     if (response.status === 401) {
       delete localStorage.openAIKey;
-      document.location.href='/';
+      document.location.href = '/';
     }
-    
+
     if (!response.ok) {
       throw new Error('Failed to get response from OpenAI');
     }

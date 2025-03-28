@@ -8,15 +8,30 @@ import { callAI, AIActions, Message } from "@/lib/getChatCompletion"
 
 import { scrollToBottom } from "../lib/scroll"
 import { useAtom } from "jotai"
-import { Chat, ChatType, chatTypeAtom } from "@/lib/store"
+import { Chat, ChatModels, ChatType, chatTypeAtom, ImageModels, modelChatAtom, modelExplainAtom, modelImageAtom } from "@/lib/store"
+import { ModelSelector } from "@/components/ModelSelector"
 
 
 export function ChatBot({ type }: Chat) {
   const [loading, setLoading] = useState<boolean>(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState<string>("")
-  const [chatType, setChatType] = useAtom(chatTypeAtom)
+  const [, setChatType] = useAtom(chatTypeAtom)
+  const [modelChat, setModelChat] = useAtom(modelChatAtom)
+  const [modelImage, setModelImage] = useAtom(modelImageAtom)
+  const [modelExplain, setModelExplain] = useAtom(modelExplainAtom)
+
   useEffect(() => {
+    if (type === ChatType.Chat && !modelChat) {
+      setModelChat(ChatModels.GPT4Mini)
+    } else if (type === ChatType.Image && !modelImage) {
+      setModelImage(ImageModels.DallE2)
+    } else if (type === ChatType.Explain && !modelExplain) {
+      setModelExplain(ChatModels.GPT4Mini)
+    }
+
+    setChatType(type);
+
     if (type === ChatType.Explain) {
       if (sessionStorage.getItem(type)) {
         return setMessages(JSON.parse(sessionStorage.getItem(type) || "[]"));
@@ -56,9 +71,19 @@ export function ChatBot({ type }: Chat) {
     const talkToAI = async () => {
       if ((messages.length > 0) && (messages[messages.length - 1].role === 'user')) {
         setLoading(true);
+
+        let model: ChatModels | ImageModels;
+        if (type === ChatType.Image) {
+          model = modelImage;
+        } else if (type === ChatType.Explain) {
+          model = modelExplain;
+        } else {
+          model = modelChat;
+        }
         const response = await callAI(
           (type === ChatType.Image ? AIActions.IMAGE : AIActions.CHAT),
-          messages
+          messages,
+          model,
         );
         setLoading(false);
 
@@ -106,7 +131,12 @@ export function ChatBot({ type }: Chat) {
   return (
     <Card className="flex flex-col w-full h-full max-h-full overflow-hidden">
       <CardHeader>
-        <CardTitle>Chat</CardTitle>
+        <CardTitle
+          className="flex flex-row justify-between"
+        >
+          <span>Chat</span>
+          <ModelSelector type={type} />
+        </CardTitle>
         <CardDescription>Chat with our AI assistant</CardDescription>
       </CardHeader>
       <CardContent id="scrollArea" className="flex-1 overflow-y-scroll">
