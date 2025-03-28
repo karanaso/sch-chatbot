@@ -7,21 +7,15 @@ import { Cog } from "lucide-react"
 import { callAI, AIActions, Message } from "@/lib/getChatCompletion"
 
 import { scrollToBottom } from "../lib/scroll"
+import { useAtom } from "jotai"
+import { Chat, ChatType, chatTypeAtom } from "@/lib/store"
 
-export enum ChatType {
-  Chat = "chat",
-  Image = "image",
-  Explain = "explain",
-}
-export interface Chat {
-  type: ChatType
-}
 
-export function Chat({ type }: Chat) {
+export function ChatBot({ type }: Chat) {
   const [loading, setLoading] = useState<boolean>(false)
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState<string>("")
-
+  const [chatType, setChatType] = useAtom(chatTypeAtom)
   useEffect(() => {
     if (type === ChatType.Explain) {
       if (sessionStorage.getItem(type)) {

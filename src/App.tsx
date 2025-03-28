@@ -2,9 +2,10 @@ import "./index.css";
 import PinComponent from "./container/PIN";
 import { AppBar } from "./container/AppBar";
 import { Routes, Route, BrowserRouter, Outlet } from 'react-router-dom';
-import { Chat, ChatType } from "./container/Chat";
+import { ChatBot } from "./container/Chat";
 import { DialogWarningNoAPIKey } from "./components/DialogWarningNoAPIKey";
 import { SetAPIKey } from "./container/SetAPIKey";
+import { ChatType } from "./lib/store";
 
 function Layout() {
   return (
@@ -22,9 +23,9 @@ export function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/chat" element={<Chat type={ChatType.Chat} />} />
-          <Route path="/image" element={<Chat type={ChatType.Image} />} />
-          <Route path="/explain" element={<Chat type={ChatType.Explain} />} />
+          <Route path="/chat" element={<ChatBot type={ChatType.Chat} />} />
+          <Route path="/image" element={<ChatBot type={ChatType.Image} />} />
+          <Route path="/explain" element={<ChatBot type={ChatType.Explain} />} />
           <Route path="/pin" element={<PinComponent />} />
           <Route path='/set-api-key' element={<SetAPIKey />} />
         </Route>
