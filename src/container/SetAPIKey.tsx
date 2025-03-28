@@ -1,4 +1,4 @@
-import { setOpenAIKey } from "@/lib/getChatCompletion"
+import { setOpenAIKey } from "@/lib/storage"
 
 export const SetAPIKey = () => {
   const params = new URLSearchParams(window.location.search)
