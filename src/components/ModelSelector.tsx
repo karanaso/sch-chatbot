@@ -64,7 +64,7 @@ export const ModelSelector = ({ type }: { type: ChatType }) => {
           {(type === ChatType.Image) && (
             <>
               <SelectItem value={ImageModels.DallE2}>DALL-E 2</SelectItem>
-              <SelectItem value={ImageModels.DallE3} disabled>DALL-E 3</SelectItem>
+              <SelectItem value={ImageModels.DallE3}>DALL-E 3</SelectItem>
               <SelectItem value={ImageModels.Midjourney} disabled>Midjourney</SelectItem>
               <SelectItem value={ImageModels.StableDiffusion} disabled>Stable Diffusion</SelectItem>
             </>
